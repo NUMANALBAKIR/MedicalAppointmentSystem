@@ -1,0 +1,95 @@
+<div class="row mt-4 justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">
+          <i class="bi bi-plus-circle"></i>
+          {{ isEditMode ? 'Edit Appointment' : 'Add New Appointment' }}
+        </h5>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+          <!-- Master Form Fields -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Patient *</label>
+              <select class="form-select" formControlName="patient" [class.is-invalid]="isFieldInvalid('patient')">
+                <option value="">Select Patient</option>
+                <option *ngFor="let patient of appointmentService.patients" [value]="patient">
+                  {{ patient }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('patient')">
+                Please select a patient.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Doctor *</label>
+              <select class="form-select" formControlName="doctor" [class.is-invalid]="isFieldInvalid('doctor')">
+                <option value="">Select Doctor</option>
+                <option *ngFor="let doctor of appointmentService.doctors" [value]="doctor">
+                  {{ doctor }}
+                </option>
+              </select>
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('doctor')">
+                Please select a doctor.
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Appointment Date *</label>
+              <input type="date" class="form-control" formControlName="date"
+                [class.is-invalid]="isFieldInvalid('date')">
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('date')">
+                Please select a date.
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Visit Type *</label>
+              <div class="mt-2">
+                <div class="form-check form-check-inline visit-type-radio">
+                  <input class="form-check-input" type="radio" formControlName="visitType" id="firstVisit"
+                    value="First">
+                  <label class="form-check-label" for="firstVisit">First Visit</label>
+                </div>
+                <div class="form-check form-check-inline visit-type-radio">
+                  <input class="form-check-input" type="radio" formControlName="visitType" id="followUp"
+                    value="Follow-up">
+                  <label class="form-check-label" for="followUp">Follow-up</label>
+                </div>
+              </div>
+              <div class="text-danger small" *ngIf="isFieldInvalid('visitType')">
+                Please select a visit type.
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Notes</label>
+              <textarea class="form-control" formControlName="notes" rows="3"
+                placeholder="Enter appointment notes"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Diagnosis</label>
+              <textarea class="form-control" formControlName="diagnosis" rows="3"
+                placeholder="Enter diagnosis"></textarea>
+            </div>
+          </div>
+          
+          <!-- Form Actions -->
+          <div class="d-flex justify-content-end mt-4">
+            <button type="button" class="btn btn-secondary me-2" (click)="cancel()">
+              <i class="bi bi-x-circle"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="appointmentForm.invalid">
+              <i class="bi bi-check-circle"></i> Save Appointment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
