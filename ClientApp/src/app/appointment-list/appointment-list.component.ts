@@ -6,7 +6,7 @@ import { AppointmentService } from '../_services/appointment.service';
 import { DoctorDTO } from '../_models/doctorDTO';
 import { DataService } from '../_services/data.service';
 import { PrescriptionPrintService } from '../_services/prescription-print.service';
-
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-appointment-list',
@@ -34,7 +34,9 @@ export class AppointmentListComponent implements OnInit {
     public appointmentService: AppointmentService,
     public dataService: DataService,
     private router: Router,
-    private prescriptionPrintService: PrescriptionPrintService
+    private prescriptionPrintService: PrescriptionPrintService,
+    private toastr: ToastrService
+
   ) {
 
   }
@@ -69,10 +71,11 @@ export class AppointmentListComponent implements OnInit {
       this.appointmentService.deleteAppointment(id)
         .subscribe({
           next: (res) => {
-            alert('done');
+            this.toastr.success('Dleted successfully!', 'Success');
           },
           error: (err) => {
             console.log(err);
+            this.toastr.error('Failed', 'Error');
           }
         });
 
@@ -82,7 +85,6 @@ export class AppointmentListComponent implements OnInit {
 
 
   applyFilters(): void {
-
     this.filteredAppointments = this.appointments.filter(appointment => {
       const matchesSearch = !this.searchTerm ||
         appointment.patientName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
