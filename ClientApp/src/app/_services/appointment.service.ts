@@ -1,77 +1,104 @@
 import { Injectable } from '@angular/core';
-import { Appointment } from '../_models/appointment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { AppointmentDTO } from '../_models/appointmentDTO';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { DoctorDTO } from '../_models/doctorDTO';
+import { PatientDTO } from '../_models/patientDTO';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
-  private appointments: Appointment[] = [
+
+  private url!: string;
+  // private selectedAppointment!: AppointmentDTO;
+
+  constructor(private httpClient: HttpClient) {
+    this.url = `${environment.apiUrl}/appointments`;
+  }
+
+  // setAppointment(appointment: AppointmentDTO) {
+  //   this.selectedAppointment = appointment;
+  // }
+
+  // getAppointment(): AppointmentDTO {
+  //   return this.selectedAppointment;
+  // }
+
+
+  createAppointment(appointmentDTO: AppointmentDTO) {
+    return this.httpClient.post(this.url, appointmentDTO, { responseType: 'json' });
+  }
+
+  updateAppointment(id: number, appointmentDTO: AppointmentDTO) {
+    let fullUrl = this.url + `/${id}`;
+    return this.httpClient.put(fullUrl, appointmentDTO, { responseType: 'json' });
+  }
+
+  deleteAppointment(id: number) {
+    let fullUrl = this.url + `/${id}`;
+    return this.httpClient.delete(fullUrl, { responseType: 'json' });
+  }
+
+  //------------
+
+  private appointments: AppointmentDTO[] = [
     {
       id: 1,
-      patient: 'John Doe',
-      doctor: 'Dr. Smith',
-      date: '2025-08-20',
+      patientName: 'John Doe',
+      doctorName: 'Dr. Smith',
+      appointmentDate: '2025-08-20',
       visitType: 'First',
       diagnosis: 'Fever',
       notes: 'Patient complains of high fever',
-      prescriptions: [
-        { medicine: 'Paracetamol', dosage: '500mg 2x/day', startDate: '2025-08-20', endDate: '2025-08-25', notes: 'Take after meals' },
-        { medicine: 'Amoxicillin', dosage: '250mg 3x/day', startDate: '2025-08-20', endDate: '2025-08-27', notes: 'Before meal' }
-      ]
+      doctorId: 1,
+      patientId: 1,
+      prescriptions: []
     },
     {
       id: 2,
-      patient: 'Jane Smith',
-      doctor: 'Dr. Brown',
-      date: '2025-08-21',
+      patientName: 'Jane Smith',
+      doctorName: 'Dr. Brown',
+      appointmentDate: '2025-08-21',
       visitType: 'Follow-up',
       diagnosis: 'Diabetes',
       notes: 'Regular checkup',
-      prescriptions: [
-        { medicine: 'Metformin', dosage: '850mg 1x/day', startDate: '2025-08-21', endDate: '2025-09-21', notes: 'Morning dose' }
-      ]
+      doctorId: 1,
+      patientId: 1,
+      prescriptions: []
     }
   ];
 
-  private appointmentsSubject = new BehaviorSubject<Appointment[]>(this.appointments);
+  private appointmentsSubject = new BehaviorSubject<AppointmentDTO[]>(this.appointments);
   public appointments$ = this.appointmentsSubject.asObservable();
 
   patients = ['John Doe', 'Jane Smith', 'Bob Johnson'];
   doctors = ['Dr. Smith', 'Dr. Brown', 'Dr. Johnson'];
   medicines = ['Paracetamol', 'Amoxicillin', 'Metformin', 'Aspirin', 'Ibuprofen', 'Omeprazole'];
 
-  constructor() { }
 
-  getAppointments(): Observable<Appointment[]> {
+  getAppointments(): Observable<AppointmentDTO[]> {
     return this.appointments$;
   }
 
-  getAppointmentById(id: number): Appointment | undefined {
-    return this.appointments.find(a => a.id === id);
+  // getAppointmentById(id: number) {
+  //   let fullUrl = `${this.url}/${id}}`;
+  //   return this.httpClient.get<AppointmentDTO>(fullUrl, { responseType: 'json' })
+  //     .pipe(map(
+  //       (data) => {
+  //         return data;
+  //       }
+  //     ));
+  // }
+
+  getAppointmentById(id: number): Observable<AppointmentDTO> {
+    const fullUrl = `${this.url}/${id}`;
+    return this.httpClient.get<AppointmentDTO>(fullUrl);
   }
 
-  createAppointment(appointment: Omit<Appointment, 'id'>): void {
-    const newAppointment: Appointment = {
-      ...appointment,
-      id: this.getNextId()
-    };
-    this.appointments.push(newAppointment);
-    this.appointmentsSubject.next([...this.appointments]);
-  }
+  //--
 
-  updateAppointment(id: number, appointment: Omit<Appointment, 'id'>): void {
-    const index = this.appointments.findIndex(a => a.id === id);
-    if (index !== -1) {
-      this.appointments[index] = { ...appointment, id };
-      this.appointmentsSubject.next([...this.appointments]);
-    }
-  }
-
-  deleteAppointment(id: number): void {
-    this.appointments = this.appointments.filter(a => a.id !== id);
-    this.appointmentsSubject.next([...this.appointments]);
-  }
 
   private getNextId(): number {
     return this.appointments.length > 0 ? Math.max(...this.appointments.map(a => a.id)) + 1 : 1;

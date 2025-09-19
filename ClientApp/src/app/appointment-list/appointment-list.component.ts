@@ -1,8 +1,10 @@
-import { Appointment } from '../_models/appointment';
+import { AppointmentDTO } from '../_models/appointmentDTO';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { AppointmentService } from '../_services/appointment.service';
+import { DoctorDTO } from '../_models/doctorDTO';
+import { DataService } from '../_services/data.service';
 
 @Component({
   selector: 'app-appointment-list',
@@ -11,10 +13,10 @@ import { AppointmentService } from '../_services/appointment.service';
 })
 export class AppointmentListComponent implements OnInit {
 
-
-  appointments: Appointment[] = [];
-  filteredAppointments: Appointment[] = [];
-  paginatedAppointments: Appointment[] = [];
+  allDoctor!: Observable<DoctorDTO[]>;
+  appointments: AppointmentDTO[] = [];
+  filteredAppointments: AppointmentDTO[] = [];
+  paginatedAppointments: AppointmentDTO[] = [];
 
   searchTerm = '';
   doctorFilter = '';
@@ -28,10 +30,15 @@ export class AppointmentListComponent implements OnInit {
 
   constructor(
     public appointmentService: AppointmentService,
+    public dataService: DataService,
     private router: Router
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
+    this.allDoctor = this.dataService.getDoctors();
+
     this.appointmentService.getAppointments()
       .pipe(takeUntil(this.destroy$))
       .subscribe(appointments => {
@@ -59,7 +66,7 @@ export class AppointmentListComponent implements OnInit {
     }
   }
 
-  downloadPrescription(appointment: Appointment): void {
+  downloadPrescription(appointment: AppointmentDTO): void {
     const prescriptionModal = document.getElementById('prescriptionModal') as any;
     if (prescriptionModal && prescriptionModal.show) {
       prescriptionModal.show(appointment);
@@ -68,17 +75,16 @@ export class AppointmentListComponent implements OnInit {
 
   applyFilters(): void {
 
-    this.filteredAppointments = this.appointments.filter(appointment =>
-      {
-        const matchesSearch = !this.searchTerm ||
-          appointment.patient.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-          appointment.doctor.toLowerCase().includes(this.searchTerm.toLowerCase());
+    this.filteredAppointments = this.appointments.filter(appointment => {
+      const matchesSearch = !this.searchTerm ||
+        appointment.patientName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        appointment.doctorName.toLowerCase().includes(this.searchTerm.toLowerCase());
 
-        const matchesDoctor = !this.doctorFilter || appointment.doctor === this.doctorFilter;
-        const matchesVisitType = !this.visitTypeFilter || appointment.visitType === this.visitTypeFilter;
+      const matchesDoctor = !this.doctorFilter || appointment.doctorName === this.doctorFilter;
+      const matchesVisitType = !this.visitTypeFilter || appointment.visitType === this.visitTypeFilter;
 
-        return matchesSearch && matchesDoctor && matchesVisitType;
-      }
+      return matchesSearch && matchesDoctor && matchesVisitType;
+    }
     );
 
     this.totalPages = Math.ceil(this.filteredAppointments.length / this.itemsPerPage);
@@ -100,10 +106,6 @@ export class AppointmentListComponent implements OnInit {
 
   getPageNumbers(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-  }
-
-  formatDate(dateString: string): string {
-    return new Date(dateString).toLocaleDateString('en-GB');
   }
 
   prescriptionDetails(id: number): void {

@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppointmentService } from '../_services/appointment.service';
+import { Observable, Subscription } from 'rxjs';
+import { PatientDTO } from '../_models/patientDTO';
+import { DoctorDTO } from '../_models/doctorDTO';
+import { DataService } from '../_services/data.service';
+import { AppointmentDTO } from '../_models/appointmentDTO';
 
 @Component({
   selector: 'app-appointment-form',
@@ -12,10 +17,13 @@ export class AppointmentFormComponent implements OnInit {
   appointmentForm: FormGroup;
   isEditMode = false;
   appointmentId: number | null = null;
+  public allPatients!: Observable<PatientDTO[]>;
+  public allDoctors!: Observable<DoctorDTO[]>;
 
   constructor(
     private fb: FormBuilder,
     public appointmentService: AppointmentService,
+    public dataService: DataService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -23,10 +31,13 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.allDoctors = this.dataService.getDoctors();
+    this.allPatients = this.dataService.getPatients();
+
     this.route.params.subscribe(params => {
       if (params['id']) {
         this.isEditMode = true;
-        this.appointmentId = +params['id'];
+        this.appointmentId = Number(params['id']);
         this.loadAppointment(this.appointmentId);
       }
     });
@@ -34,67 +45,89 @@ export class AppointmentFormComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.fb.group({
-      patient: ['', Validators.required],
-      doctor: ['', Validators.required],
-      date: ['', Validators.required],
+      patientId: ['', Validators.required],
+      doctorId: ['', Validators.required],
+      appointmentDate: ['', Validators.required],
       visitType: ['', Validators.required],
-      notes: [''],
-      diagnosis: [''],
+      notes: ['', Validators.required],
+      diagnosis: ['', Validators.required]
     });
   }
 
-  // get prescriptionsArray(): FormArray {
-  //   return this.appointmentForm.get('prescriptions') as FormArray;
-  // }
-
-  // createPrescriptionForm(prescription?: Prescription): FormGroup {
-  //   return this.fb.group({
-  //     medicine: [prescription?.medicine || ''],
-  //     dosage: [prescription?.dosage || ''],
-  //     startDate: [prescription?.startDate || ''],
-  //     endDate: [prescription?.endDate || ''],
-  //     notes: [prescription?.notes || '']
-  //   });
-  // }
-
-  // addPrescriptionRow(): void {
-  //   this.prescriptionsArray.push(this.createPrescriptionForm());
-  // }
-
-  // removePrescriptionRow(index: number): void {
-  //   this.prescriptionsArray.removeAt(index);
-  // }
-
   loadAppointment(id: number): void {
-    const appointment = this.appointmentService.getAppointmentById(id);
-    if (appointment) {
-      this.appointmentForm.patchValue({
-        patient: appointment.patient,
-        doctor: appointment.doctor,
-        date: appointment.date,
-        visitType: appointment.visitType,
-        notes: appointment.notes,
-        diagnosis: appointment.diagnosis
-      });
-
-      // Load prescriptions
-      // appointment.prescriptions.forEach(prescription => {
-      //   this.prescriptionsArray.push(this.createPrescriptionForm(prescription));
-      // });
-    }
+    this.appointmentService.getAppointmentById(id).subscribe(
+      (appointment: AppointmentDTO) => {
+        if (appointment) {
+          this.appointmentForm.patchValue({
+            id: appointment.id,
+            patientId: appointment.patientId,
+            patientName: appointment.patientName,
+            doctorId: appointment.doctorId,
+            doctorName: appointment.doctorName,
+            appointmentDate: appointment.appointmentDate.split('T')[0],
+            visitType: appointment.visitType,
+            notes: appointment.notes,
+            diagnosis: appointment.diagnosis
+          });
+        }
+      },
+      (e) => {
+        console.log('Error: ' + e);
+      }
+    );
   }
 
   onSubmit(): void {
     if (this.appointmentForm.valid) {
-      const formValue = this.appointmentForm.value;
+      const formValue: AppointmentDTO = this.appointmentForm.value as AppointmentDTO;
+
+      formValue.appointmentDate = new Date(formValue.appointmentDate).toISOString();
 
       if (this.isEditMode && this.appointmentId) {
-        this.appointmentService.updateAppointment(this.appointmentId, formValue);
-      } else {
-        this.appointmentService.createAppointment(formValue);
+
+        this.appointmentService.updateAppointment(this.appointmentId, formValue)
+          .subscribe({
+            next: (res) => {
+              this.router.navigate(['/appointment-list']);
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          });
+
+
+        // this.appointmentService.updateAppointment(this.appointmentId, formValue).subscribe(
+        //   (r) => {
+        //     this.router.navigate(['/appointment-list']);
+        //   },
+        //   (e) => {
+        //     console.log(e);
+        //   }
+        // )
+      }
+      else {
+        // this.appointmentService.createAppointment(formValue).subscribe(
+        //   (r) => {
+        //     this.router.navigate(['/appointment-list']);
+        //   },
+        //   (e) => {
+        //     console.log(e);
+        //   }
+        // )
+
+        this.appointmentService.createAppointment(formValue)
+          .subscribe({
+            next: (res) => {
+              this.router.navigate(['/appointment-list']);
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          });
+
+
       }
 
-      this.router.navigate(['/appointment-list']);
     }
   }
 

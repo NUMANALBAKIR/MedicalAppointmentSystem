@@ -33,7 +33,7 @@ app.UseCors(builder => builder
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("https://localhost:4200"));
+    .WithOrigins("http://localhost:5503"));
 
 
 app.UseHttpsRedirection();

@@ -1,12 +1,12 @@
 <div class="row mt-4 justify-content-center">
   <div class="col-lg-8">
-        <form [formGroup]="prescriptionForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="prescriptionFormGroup" (ngSubmit)="onSubmit()">
           <!-- Prescription Detail Grid -->
           <div class="card mt-4">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h5 class="mb-0"><i class="bi bi-prescription2"></i> Prescriptions</h5>
-              <button type="button" class="btn btn-sm btn-success" (click)="addPrescription()">
-                <i class="bi bi-plus"></i> Add Medicine
+              <button type="button" class="btn btn-sm btn-success" (click)="addPrescriptionRow()">
+                <i class="bi bi-plus"></i> Add Prescription Row
               </button>
             </div>
             <div class="card-body prescription-grid">
@@ -23,12 +23,12 @@
                     </tr>
                   </thead>
                   <tbody formArrayName="prescriptions">
-                    <tr *ngFor="let prescription of prescriptions.controls; let i = index" [formGroupName]="i">
+                    <tr *ngFor="let prescription of getPrescriptionArray.controls; let i = index" [formGroupName]="i">
                       <td>
-                        <select class="form-select form-select-sm" formControlName="medicine">
+                        <select class="form-select form-select-sm" formControlName="medicineId">
                           <option value="">Select Medicine</option>
-                          <option *ngFor="let medicine of appointmentService.medicines" [value]="medicine">
-                            {{ medicine }}
+                          <option *ngFor="let medicine of allMedicine | async" [value]="medicine.id">
+                            {{ medicine.name }}
                           </option>
                         </select>
                       </td>
@@ -47,7 +47,7 @@
                           placeholder="Instructions">
                       </td>
                       <td>
-                        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePrescription(i)">
+                        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePrescriptionRow(i)">
                           <i class="bi bi-trash"></i>
                         </button>
                       </td>
@@ -63,10 +63,11 @@
             <button type="button" class="btn btn-secondary me-2" (click)="cancel()">
               <i class="bi bi-x-circle"></i> Cancel
             </button>
-            <button type="submit" class="btn btn-primary" [disabled]="prescriptionForm.invalid">
+            <button type="submit" class="btn btn-primary" [disabled]="prescriptionFormGroup.invalid">
               <i class="bi bi-check-circle"></i> Save Prescriptions
             </button>
           </div>
         </form>
       </div>
     </div>
+
