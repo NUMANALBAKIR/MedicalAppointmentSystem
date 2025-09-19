@@ -92,7 +92,7 @@ export class AppointmentListComponent implements OnInit {
           next: (res) => {
             if (res && typeof res === 'number') {
               this.toastr.success('Dleted successfully!', 'Success');
-              this.paginatedAppointments = this.paginatedAppointments.filter(x => x.id !== res);
+              this.loadAppointments();
             }
           },
           error: (err) => {

@@ -24,8 +24,10 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePrescriptionDetails([FromBody] List<PrescriptionDetailDTO> prescriptionDetailDTOs)
         {
+            var appointmentId = prescriptionDetailDTOs[0].AppointmentId;
 
             var itemsToDelete = await _context.PrescriptionDetails
+                .Where(x => x.AppointmentId == appointmentId)
                 .ToListAsync();
 
             _context.PrescriptionDetails.RemoveRange(itemsToDelete);

@@ -67,10 +67,6 @@
                 </td>
                 <td>{{ appointment.diagnosis }}</td>
                 <td>
-                  <button class="btn btn-outline-warning btn-action me-1"
-                    (click)="prescriptionDetails(appointment.id)">
-                    <i class="bi bi-eye"></i> Details
-                  </button>
                   <button class="btn btn-outline-primary btn-action me-1"
                     (click)="editAppointment(appointment.id)">
                     <i class="bi bi-pencil"></i> Edit
@@ -78,6 +74,10 @@
                   <button class="btn btn-outline-danger btn-action me-1"
                     (click)="deleteAppointment(appointment.id)">
                     <i class="bi bi-trash"></i> Delete
+                  </button>
+                  <button class="btn btn-outline-warning btn-action me-1"
+                    (click)="prescriptionDetails(appointment.id)">
+                    <i class="bi bi-eye"></i> Prescriptions
                   </button>
                   <button class="btn btn-outline-success btn-action" (click)="downloadPrescription(appointment.id)">
                     <i class="bi bi-download"></i> PDF
