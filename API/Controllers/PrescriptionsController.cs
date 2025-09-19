@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.DTOs;
 using API.Entities;
+using API.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,9 +13,11 @@ namespace API.Controllers
     public class PrescriptionsController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public PrescriptionsController(AppDbContext context)
+        private IEmailService _emailService;
+        public PrescriptionsController(AppDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
 
@@ -45,5 +48,14 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return Ok(true);
         }
+
+
+        [HttpGet("sendEmail/appointmentId/{id}")]
+        public async Task<IActionResult> SendAppointmentEmail(int id)
+        {
+            var result = await _emailService.SendEmailAsync(id);
+            return Ok(new { success = result });
+        }
+
     }
 }

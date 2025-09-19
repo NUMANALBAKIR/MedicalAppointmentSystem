@@ -71,8 +71,8 @@
               <label class="form-label">Notes</label>
               <input class="form-control" formControlName="notes"
                 placeholder="Enter appointment notes"/>
-                              <div class="text-danger small" *ngIf="isFieldInvalid('notes')">
-                Please select a visit type.
+                <div class="text-danger small" *ngIf="isFieldInvalid('notes')">
+                  Please add notes.
               </div>
             </div>
             <div class="col-md-6">
@@ -80,7 +80,7 @@
               <textarea class="form-control" formControlName="diagnosis" rows="3"
                 placeholder="Enter diagnosis"></textarea>
                               <div class="text-danger small" *ngIf="isFieldInvalid('diagnosis')">
-                Please select a visit type.
+                Please add diagnosis.
               </div>
             </div>
           </div>

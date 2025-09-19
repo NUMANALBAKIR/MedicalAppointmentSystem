@@ -18,9 +18,8 @@ export class PrescriptionService {
     return this.httpClient.put(this.url, prescriptionDetails, { responseType: 'json' });
   }
 
-  // updatePrescriptions(prescriptions: PrescriptionDetailDTO[]): Observable<any> {
-  //     let apiUrl = 'https://localhost:5500/api/prescriptions'; // adjust
-  //   return this.httpClient.put(`${apiUrl}/update`, prescriptions);
-  // }
-
+  sendEmail(id: number): Observable<boolean> {
+    const fullUrl = `${this.url}/sendEmail/appointmentId/${id}`;
+    return this.httpClient.get<boolean>(fullUrl);
+  }
 }

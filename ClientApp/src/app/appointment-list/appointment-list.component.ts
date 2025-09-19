@@ -7,6 +7,7 @@ import { DoctorDTO } from '../_models/doctorDTO';
 import { DataService } from '../_services/data.service';
 import { PrescriptionPrintService } from '../_services/prescription-print.service';
 import { ToastrService } from 'ngx-toastr';
+import { PrescriptionService } from '../_services/prescription.service';
 
 @Component({
   selector: 'app-appointment-list',
@@ -32,8 +33,8 @@ export class AppointmentListComponent implements OnInit {
     public dataService: DataService,
     private router: Router,
     private prescriptionPrintService: PrescriptionPrintService,
-    private toastr: ToastrService
-
+    private toastr: ToastrService,
+    private prescriptionService: PrescriptionService
   ) { }
 
   ngOnInit(): void {
@@ -109,6 +110,21 @@ export class AppointmentListComponent implements OnInit {
 
   downloadPrescription(appointmentId: number) {
     this.prescriptionPrintService.downloadPrescriptionById(appointmentId);
+  }
+
+  sendEmail(id: number) {
+    this.prescriptionService.sendEmail(id)
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.toastr.success('Email Sent!', 'Success');
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error('Failed', 'Error');
+        }
+      });
   }
 
 }
