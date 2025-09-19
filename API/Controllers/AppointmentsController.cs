@@ -22,7 +22,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<object>> GetAppointments(
             [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 3,
+            [FromQuery] int pageSize = 2,
             [FromQuery] string? search = null,
             [FromQuery] string? doctorFilter = null,
             [FromQuery] string? visitTypeFilter = null)

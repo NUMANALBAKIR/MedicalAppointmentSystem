@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -119,7 +119,11 @@ namespace API.Migrations
                 values: new object[,]
                 {
                     { 1, "Dr. Smith" },
-                    { 2, "Dr. Brown" }
+                    { 2, "Dr. Brown" },
+                    { 3, "Dr. Taylor" },
+                    { 4, "Dr. Wilson" },
+                    { 5, "Dr. Carter" },
+                    { 6, "Dr. Adams" }
                 });
 
             migrationBuilder.InsertData(
@@ -129,7 +133,13 @@ namespace API.Migrations
                 {
                     { 1, "Paracetamol" },
                     { 2, "Metformin" },
-                    { 3, "Amoxicillin" }
+                    { 3, "Amoxicillin" },
+                    { 4, "Ibuprofen" },
+                    { 5, "Atorvastatin" },
+                    { 6, "Omeprazole" },
+                    { 7, "Losartan" },
+                    { 8, "Levothyroxine" },
+                    { 9, "Azithromycin" }
                 });
 
             migrationBuilder.InsertData(
@@ -138,7 +148,11 @@ namespace API.Migrations
                 values: new object[,]
                 {
                     { 1, "john@email.com", "John Doe" },
-                    { 2, "jane@email.com", "Jane Smith" }
+                    { 2, "jane@email.com", "Jane Smith" },
+                    { 3, "alice@email.com", "Alice Johnson" },
+                    { 4, "bob@email.com", "Bob Lee" },
+                    { 5, "clara@email.com", "Clara Oswald" },
+                    { 6, "david@email.com", "Numan" }
                 });
 
             migrationBuilder.InsertData(
@@ -146,9 +160,15 @@ namespace API.Migrations
                 columns: new[] { "Id", "AppointmentDate", "Diagnosis", "DoctorId", "Notes", "PatientId", "VisitType" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), "Tension headache", 1, "Patient complains of headache", 1, "First Visit" },
-                    { 2, new DateTime(2024, 1, 20, 14, 30, 0, 0, DateTimeKind.Unspecified), "Hypertension - stable", 2, "Blood pressure check", 2, "Follow-up" },
-                    { 3, new DateTime(2024, 2, 1, 9, 0, 0, 0, DateTimeKind.Unspecified), "Improved condition", 1, "Follow-up for headache treatment", 1, "Follow-up" }
+                    { 1, new DateTime(2024, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified), "Tension headache", 1, "Headache", 1, "First Visit" },
+                    { 2, new DateTime(2024, 1, 20, 14, 30, 0, 0, DateTimeKind.Unspecified), "Hypertension", 2, "BP check", 2, "Follow-up" },
+                    { 3, new DateTime(2024, 2, 1, 9, 0, 0, 0, DateTimeKind.Unspecified), "Improved", 1, "Headache follow-up", 1, "Follow-up" },
+                    { 4, new DateTime(2024, 2, 10, 11, 0, 0, 0, DateTimeKind.Unspecified), "Bronchitis", 3, "Cough", 3, "First Visit" },
+                    { 5, new DateTime(2024, 2, 15, 13, 0, 0, 0, DateTimeKind.Unspecified), "Healthy", 4, "Annual checkup", 4, "Follow-up" },
+                    { 6, new DateTime(2024, 3, 1, 10, 30, 0, 0, DateTimeKind.Unspecified), "Gastritis", 5, "Stomach pain", 5, "First Visit" },
+                    { 7, new DateTime(2024, 3, 5, 15, 0, 0, 0, DateTimeKind.Unspecified), "Hypothyroidism", 6, "Thyroid check", 6, "Follow-up" },
+                    { 8, new DateTime(2024, 3, 10, 9, 0, 0, 0, DateTimeKind.Unspecified), "Improving", 2, "Cough persists", 3, "Follow-up" },
+                    { 9, new DateTime(2024, 3, 15, 14, 0, 0, 0, DateTimeKind.Unspecified), "High cholesterol", 1, "Cholesterol review", 4, "First Visit" }
                 });
 
             migrationBuilder.InsertData(
@@ -156,9 +176,18 @@ namespace API.Migrations
                 columns: new[] { "Id", "AppointmentId", "Dosage", "EndDate", "MedicineId", "Notes", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, 1, "500mg twice daily", new DateTime(2024, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "Take with food", new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2, 2, "500mg once daily", new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Take before breakfast", new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3, 1, "250mg three times daily", new DateTime(2024, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Complete full course", new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1, 1, "500mg twice daily", new DateTime(2024, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, "With food", new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 2, 2, "500mg once daily", new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, "Before breakfast", new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 3, 1, "250mg three times daily", new DateTime(2024, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Full course", new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 4, 4, "200mg twice daily", new DateTime(2024, 2, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, "After meals", new DateTime(2024, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 5, 5, "10mg daily", new DateTime(2024, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "Monitor cholesterol", new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 6, 6, "20mg daily", new DateTime(2024, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, "Before meals", new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 7, 7, "100mcg daily", new DateTime(2024, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 8, "Morning dose", new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 8, 8, "500mg once daily", new DateTime(2024, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), 9, "With water", new DateTime(2024, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 9, 9, "10mg daily", new DateTime(2024, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, "Monitor lipid profile", new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 10, 4, "250mg twice daily", new DateTime(2024, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, "Complete course", new DateTime(2024, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 11, 6, "20mg daily", new DateTime(2024, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, "Before meals", new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
+                    { 12, 7, "100mcg daily", new DateTime(2024, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 8, "Morning dose", new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified) }
                 });
 
             migrationBuilder.CreateIndex(

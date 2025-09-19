@@ -66,7 +66,7 @@ namespace API.Migrations
                             AppointmentDate = new DateTime(2024, 1, 15, 10, 0, 0, 0, DateTimeKind.Unspecified),
                             Diagnosis = "Tension headache",
                             DoctorId = 1,
-                            Notes = "Patient complains of headache",
+                            Notes = "Headache",
                             PatientId = 1,
                             VisitType = "First Visit"
                         },
@@ -74,9 +74,9 @@ namespace API.Migrations
                         {
                             Id = 2,
                             AppointmentDate = new DateTime(2024, 1, 20, 14, 30, 0, 0, DateTimeKind.Unspecified),
-                            Diagnosis = "Hypertension - stable",
+                            Diagnosis = "Hypertension",
                             DoctorId = 2,
-                            Notes = "Blood pressure check",
+                            Notes = "BP check",
                             PatientId = 2,
                             VisitType = "Follow-up"
                         },
@@ -84,11 +84,71 @@ namespace API.Migrations
                         {
                             Id = 3,
                             AppointmentDate = new DateTime(2024, 2, 1, 9, 0, 0, 0, DateTimeKind.Unspecified),
-                            Diagnosis = "Improved condition",
+                            Diagnosis = "Improved",
                             DoctorId = 1,
-                            Notes = "Follow-up for headache treatment",
+                            Notes = "Headache follow-up",
                             PatientId = 1,
                             VisitType = "Follow-up"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AppointmentDate = new DateTime(2024, 2, 10, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Bronchitis",
+                            DoctorId = 3,
+                            Notes = "Cough",
+                            PatientId = 3,
+                            VisitType = "First Visit"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AppointmentDate = new DateTime(2024, 2, 15, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Healthy",
+                            DoctorId = 4,
+                            Notes = "Annual checkup",
+                            PatientId = 4,
+                            VisitType = "Follow-up"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AppointmentDate = new DateTime(2024, 3, 1, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Gastritis",
+                            DoctorId = 5,
+                            Notes = "Stomach pain",
+                            PatientId = 5,
+                            VisitType = "First Visit"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AppointmentDate = new DateTime(2024, 3, 5, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Hypothyroidism",
+                            DoctorId = 6,
+                            Notes = "Thyroid check",
+                            PatientId = 6,
+                            VisitType = "Follow-up"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AppointmentDate = new DateTime(2024, 3, 10, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "Improving",
+                            DoctorId = 2,
+                            Notes = "Cough persists",
+                            PatientId = 3,
+                            VisitType = "Follow-up"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AppointmentDate = new DateTime(2024, 3, 15, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Diagnosis = "High cholesterol",
+                            DoctorId = 1,
+                            Notes = "Cholesterol review",
+                            PatientId = 4,
+                            VisitType = "First Visit"
                         });
                 });
 
@@ -118,6 +178,26 @@ namespace API.Migrations
                         {
                             Id = 2,
                             Name = "Dr. Brown"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Dr. Taylor"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Dr. Wilson"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Dr. Carter"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Dr. Adams"
                         });
                 });
 
@@ -152,6 +232,36 @@ namespace API.Migrations
                         {
                             Id = 3,
                             Name = "Amoxicillin"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Ibuprofen"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Atorvastatin"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Omeprazole"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Losartan"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Levothyroxine"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Azithromycin"
                         });
                 });
 
@@ -187,6 +297,30 @@ namespace API.Migrations
                             Id = 2,
                             Email = "jane@email.com",
                             Name = "Jane Smith"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "alice@email.com",
+                            Name = "Alice Johnson"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Email = "bob@email.com",
+                            Name = "Bob Lee"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Email = "clara@email.com",
+                            Name = "Clara Oswald"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Email = "david@email.com",
+                            Name = "Numan"
                         });
                 });
 
@@ -234,7 +368,7 @@ namespace API.Migrations
                             Dosage = "500mg twice daily",
                             EndDate = new DateTime(2024, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MedicineId = 1,
-                            Notes = "Take with food",
+                            Notes = "With food",
                             StartDate = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -244,7 +378,7 @@ namespace API.Migrations
                             Dosage = "500mg once daily",
                             EndDate = new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MedicineId = 2,
-                            Notes = "Take before breakfast",
+                            Notes = "Before breakfast",
                             StartDate = new DateTime(2024, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -254,8 +388,98 @@ namespace API.Migrations
                             Dosage = "250mg three times daily",
                             EndDate = new DateTime(2024, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             MedicineId = 3,
-                            Notes = "Complete full course",
+                            Notes = "Full course",
                             StartDate = new DateTime(2024, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AppointmentId = 4,
+                            Dosage = "200mg twice daily",
+                            EndDate = new DateTime(2024, 2, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 4,
+                            Notes = "After meals",
+                            StartDate = new DateTime(2024, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AppointmentId = 5,
+                            Dosage = "10mg daily",
+                            EndDate = new DateTime(2024, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 5,
+                            Notes = "Monitor cholesterol",
+                            StartDate = new DateTime(2024, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AppointmentId = 6,
+                            Dosage = "20mg daily",
+                            EndDate = new DateTime(2024, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 6,
+                            Notes = "Before meals",
+                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AppointmentId = 7,
+                            Dosage = "100mcg daily",
+                            EndDate = new DateTime(2024, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 8,
+                            Notes = "Morning dose",
+                            StartDate = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AppointmentId = 8,
+                            Dosage = "500mg once daily",
+                            EndDate = new DateTime(2024, 3, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 9,
+                            Notes = "With water",
+                            StartDate = new DateTime(2024, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AppointmentId = 9,
+                            Dosage = "10mg daily",
+                            EndDate = new DateTime(2024, 9, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 5,
+                            Notes = "Monitor lipid profile",
+                            StartDate = new DateTime(2024, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AppointmentId = 4,
+                            Dosage = "250mg twice daily",
+                            EndDate = new DateTime(2024, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 3,
+                            Notes = "Complete course",
+                            StartDate = new DateTime(2024, 2, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AppointmentId = 6,
+                            Dosage = "20mg daily",
+                            EndDate = new DateTime(2024, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 6,
+                            Notes = "Before meals",
+                            StartDate = new DateTime(2024, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 12,
+                            AppointmentId = 7,
+                            Dosage = "100mcg daily",
+                            EndDate = new DateTime(2024, 6, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            MedicineId = 8,
+                            Notes = "Morning dose",
+                            StartDate = new DateTime(2024, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
