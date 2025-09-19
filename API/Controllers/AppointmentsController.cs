@@ -62,7 +62,7 @@ namespace API.Controllers
                     PatientName = a.Patient.Name,
                     DoctorId = a.DoctorId,
                     DoctorName = a.Doctor.Name,
-                    //AppointmentDate = a.AppointmentDate,
+                    AppointmentDate = a.AppointmentDate,
                     VisitType = a.VisitType,
                     Notes = a.Notes,
                     Diagnosis = a.Diagnosis
@@ -100,7 +100,7 @@ namespace API.Controllers
                 PatientName = appointment.Patient.Name,
                 DoctorId = appointment.DoctorId,
                 DoctorName = appointment.Doctor.Name,
-                //AppointmentDate = appointment.AppointmentDate,
+                AppointmentDate = appointment.AppointmentDate,
                 VisitType = appointment.VisitType,
                 Notes = appointment.Notes,
                 Diagnosis = appointment.Diagnosis,

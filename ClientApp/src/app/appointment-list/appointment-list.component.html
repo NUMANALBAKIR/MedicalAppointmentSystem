@@ -43,7 +43,7 @@
               <tr>
                 <th>Patient</th>
                 <th>Doctor</th>
-                <!-- <th>Date</th> -->
+                <th>Date</th>
                 <th>Visit Type</th>
                 <th>Diagnosis</th>
                 <th>Actions</th>
@@ -53,7 +53,7 @@
               <tr *ngFor="let appointment of paginatedAppointments">
                 <td>{{ appointment.patientName }}</td>
                 <td>{{ appointment.doctorName }}</td>
-                <!-- <td>{{ appointment.appointmentDate | date:'dd-MMM-yy' }}</td> -->
+                <td>{{ appointment.appointmentDate | date:'dd-MMM-yy' }}</td>
                 <td>
                   <span class="badge" [ngClass]="appointment.visitType === 'First' ? 'bg-primary' : 'bg-secondary'">
                     {{ appointment.visitType }}
@@ -73,7 +73,7 @@
                     (click)="deleteAppointment(appointment.id)">
                     <i class="bi bi-trash"></i> Delete
                   </button>
-                  <button class="btn btn-outline-success btn-action" (click)="downloadPrescription(appointment)">
+                  <button class="btn btn-outline-success btn-action" (click)="downloadPrescription(appointment.id)">
                     <i class="bi bi-download"></i> PDF
                   </button>
                 </td>

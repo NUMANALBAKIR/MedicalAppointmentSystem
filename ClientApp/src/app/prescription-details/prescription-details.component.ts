@@ -52,7 +52,7 @@ export class PrescriptionDetailsComponent implements OnInit {
   createPrescriptionRow(prescription?: PrescriptionDetailDTO): FormGroup {
     return this.fb.group({
       id: [prescription?.id || 0],
-      appointmentId: [prescription?.appointmentId || ''],
+      appointmentId: [this.appointment?.id],
       medicineId: [prescription?.medicineId || ''],
       medicineName: ['med name'],
       dosage: [prescription?.dosage || ''],
@@ -78,6 +78,8 @@ export class PrescriptionDetailsComponent implements OnInit {
     this.appointmentService.getAppointmentById(id).subscribe(
       (appointment: AppointmentDTO) => {
         if (appointment) {
+          this.appointment = appointment;
+
           if (appointment?.prescriptions?.length > 0) {
             appointment.prescriptions.forEach(prescription => {
               this.getPrescriptionArray.push(this.createPrescriptionRow(prescription));

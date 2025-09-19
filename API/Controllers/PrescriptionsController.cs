@@ -3,6 +3,7 @@ using API.DTOs;
 using API.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -20,37 +21,26 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdatePrescriptionDetails([FromBody] List<PrescriptionDetailDTO> prescriptionDetailDTOs)
         {
+
+            var itemsToDelete = await _context.PrescriptionDetails
+                .ToListAsync();
+
+            _context.PrescriptionDetails.RemoveRange(itemsToDelete);
+            await _context.SaveChangesAsync();
+
             foreach (var dto in prescriptionDetailDTOs)
             {
-                // Add new
-                if (dto.Id == 0)
+                var detail = new PrescriptionDetail
                 {
-                    var detail = new PrescriptionDetail
-                    {
-                        AppointmentId = dto.AppointmentId,
-                        MedicineId = dto.MedicineId,
-                        Dosage = dto.Dosage,
-                        StartDate = dto.StartDate,
-                        EndDate = dto.EndDate,
-                        Notes = dto.Notes
-                    };
+                    AppointmentId = dto.AppointmentId,
+                    MedicineId = dto.MedicineId,
+                    Dosage = dto.Dosage,
+                    StartDate = dto.StartDate,
+                    EndDate = dto.EndDate,
+                    Notes = dto.Notes
+                };
 
-                    _context.PrescriptionDetails.Add(detail);
-                }
-                // Update existing
-                else
-                {
-                    var existing = _context.PrescriptionDetails.Find(dto.Id);
-                    if (existing != null)
-                    {
-                        existing.AppointmentId = dto.AppointmentId;
-                        existing.MedicineId = dto.MedicineId;
-                        existing.Dosage = dto.Dosage;
-                        existing.StartDate = dto.StartDate;
-                        existing.EndDate = dto.EndDate;
-                        existing.Notes = dto.Notes;
-                    }
-                }
+                _context.PrescriptionDetails.Add(detail);
             }
             await _context.SaveChangesAsync();
             return Ok(true);

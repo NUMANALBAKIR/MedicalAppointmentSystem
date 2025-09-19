@@ -5,6 +5,8 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { AppointmentService } from '../_services/appointment.service';
 import { DoctorDTO } from '../_models/doctorDTO';
 import { DataService } from '../_services/data.service';
+import { PrescriptionPrintService } from '../_services/prescription-print.service';
+
 
 @Component({
   selector: 'app-appointment-list',
@@ -31,7 +33,8 @@ export class AppointmentListComponent implements OnInit {
   constructor(
     public appointmentService: AppointmentService,
     public dataService: DataService,
-    private router: Router
+    private router: Router,
+    private prescriptionPrintService: PrescriptionPrintService
   ) {
 
   }
@@ -62,16 +65,21 @@ export class AppointmentListComponent implements OnInit {
 
   deleteAppointment(id: number): void {
     if (confirm('Are you sure you want to delete this appointment?')) {
-      this.appointmentService.deleteAppointment(id);
+
+      this.appointmentService.deleteAppointment(id)
+        .subscribe({
+          next: (res) => {
+            alert('done');
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+
     }
   }
 
-  downloadPrescription(appointment: AppointmentDTO): void {
-    const prescriptionModal = document.getElementById('prescriptionModal') as any;
-    if (prescriptionModal && prescriptionModal.show) {
-      prescriptionModal.show(appointment);
-    }
-  }
+
 
   applyFilters(): void {
 
@@ -110,6 +118,10 @@ export class AppointmentListComponent implements OnInit {
 
   prescriptionDetails(id: number): void {
     this.router.navigate(['/prescription-details', id]);
+  }
+
+  downloadPrescription(appointmentId: number) {
+    this.prescriptionPrintService.downloadPrescriptionById(appointmentId);
   }
 
 }

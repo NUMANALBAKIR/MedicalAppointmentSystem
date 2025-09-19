@@ -10,3 +10,11 @@ Open angular.json and add CSS files under "styles":
   "src/styles.css"
 ]
 
+
+
+npm install jspdf
+
+update-database
+
+
+

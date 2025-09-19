@@ -94,27 +94,8 @@ export class AppointmentFormComponent implements OnInit {
               console.log(err);
             }
           });
-
-
-        // this.appointmentService.updateAppointment(this.appointmentId, formValue).subscribe(
-        //   (r) => {
-        //     this.router.navigate(['/appointment-list']);
-        //   },
-        //   (e) => {
-        //     console.log(e);
-        //   }
-        // )
       }
       else {
-        // this.appointmentService.createAppointment(formValue).subscribe(
-        //   (r) => {
-        //     this.router.navigate(['/appointment-list']);
-        //   },
-        //   (e) => {
-        //     console.log(e);
-        //   }
-        // )
-
         this.appointmentService.createAppointment(formValue)
           .subscribe({
             next: (res) => {
