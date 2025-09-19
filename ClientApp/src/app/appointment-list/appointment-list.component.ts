@@ -1,7 +1,7 @@
 import { AppointmentDTO } from '../_models/appointmentDTO';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Observable, Subject, takeUntil } from 'rxjs';
 import { AppointmentService } from '../_services/appointment.service';
 import { DoctorDTO } from '../_models/doctorDTO';
 import { DataService } from '../_services/data.service';
@@ -16,19 +16,16 @@ import { ToastrService } from 'ngx-toastr';
 export class AppointmentListComponent implements OnInit {
 
   allDoctor!: Observable<DoctorDTO[]>;
-  appointments: AppointmentDTO[] = [];
-  filteredAppointments: AppointmentDTO[] = [];
   paginatedAppointments: AppointmentDTO[] = [];
-
   searchTerm = '';
   doctorFilter = '';
   visitTypeFilter = '';
 
   currentPage = 1;
-  itemsPerPage = 10;
+  pageSize = 2;
+  totalItems = 0;
   totalPages = 0;
-
-  private destroy$ = new Subject<void>();
+  loading = false;
 
   constructor(
     public appointmentService: AppointmentService,
@@ -37,24 +34,45 @@ export class AppointmentListComponent implements OnInit {
     private prescriptionPrintService: PrescriptionPrintService,
     private toastr: ToastrService
 
-  ) {
-
-  }
+  ) { }
 
   ngOnInit(): void {
     this.allDoctor = this.dataService.getDoctors();
-
-    this.appointmentService.getAppointments()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(appointments => {
-        this.appointments = appointments;
-        this.applyFilters();
-      });
+    this.loadAppointments();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  loadAppointments(): void {
+    this.loading = true;
+
+    this.appointmentService.getAppointments(
+      this.currentPage,
+      this.pageSize,
+      this.searchTerm,
+      this.doctorFilter,
+      this.visitTypeFilter
+    ).subscribe({
+      next: (response: any) => {
+        this.paginatedAppointments = response.data;
+        this.totalItems = response.totalItems;
+        this.totalPages = response.totalPages;
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading appointments:', err);
+        this.toastr.error('Failed to load appointments', 'Error');
+        this.loading = false;
+      }
+    });
+  }
+
+  applyFilters(): void {
+    this.currentPage = 1;
+    this.loadAppointments();
+  }
+
+  onPageChanged(event: any): void {
+    this.currentPage = event.page;
+    this.loadAppointments();
   }
 
   navigateToAdd(): void {
@@ -71,7 +89,10 @@ export class AppointmentListComponent implements OnInit {
       this.appointmentService.deleteAppointment(id)
         .subscribe({
           next: (res) => {
-            this.toastr.success('Dleted successfully!', 'Success');
+            if (res && typeof res === 'number') {
+              this.toastr.success('Dleted successfully!', 'Success');
+              this.paginatedAppointments = this.paginatedAppointments.filter(x => x.id !== res);
+            }
           },
           error: (err) => {
             console.log(err);
@@ -80,42 +101,6 @@ export class AppointmentListComponent implements OnInit {
         });
 
     }
-  }
-
-
-
-  applyFilters(): void {
-    this.filteredAppointments = this.appointments.filter(appointment => {
-      const matchesSearch = !this.searchTerm ||
-        appointment.patientName.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        appointment.doctorName.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-      const matchesDoctor = !this.doctorFilter || appointment.doctorName === this.doctorFilter;
-      const matchesVisitType = !this.visitTypeFilter || appointment.visitType === this.visitTypeFilter;
-
-      return matchesSearch && matchesDoctor && matchesVisitType;
-    }
-    );
-
-    this.totalPages = Math.ceil(this.filteredAppointments.length / this.itemsPerPage);
-    this.currentPage = 1;
-    this.updatePagination();
-  }
-
-  changePage(event: Event, page: number): void {
-    event.preventDefault();
-    this.currentPage = page;
-    this.updatePagination();
-  }
-
-  updatePagination(): void {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    this.paginatedAppointments = this.filteredAppointments.slice(start, end);
-  }
-
-  getPageNumbers(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
   prescriptionDetails(id: number): void {

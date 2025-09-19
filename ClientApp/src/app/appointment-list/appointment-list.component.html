@@ -1,3 +1,4 @@
+
 <div class="row mt-4">
   <div class="col-12">
     <div class="card">
@@ -9,13 +10,13 @@
         <div class="search-filters">
           <div class="row">
             <div class="col-md-4">
-              <input type="text" class="form-control" placeholder="Search by patient or doctor name"
-                [(ngModel)]="searchTerm" (input)="applyFilters()">
+                <input type="text" class="form-control" placeholder="Search by patient or doctor name"
+                  [(ngModel)]="searchTerm" (input)="applyFilters()">
             </div>
             <div class="col-md-3">
               <select class="form-select" [(ngModel)]="doctorFilter" (change)="applyFilters()">
                 <option value="">Filter by Doctor</option>
-                <option *ngFor="let doctor of allDoctor | async" [value]="doctor.id">
+                <option *ngFor="let doctor of allDoctor | async" [value]="doctor.name">
                   {{ doctor.name }}
                 </option>
               </select>
@@ -23,12 +24,11 @@
             <div class="col-md-3">
               <select class="form-select" [(ngModel)]="visitTypeFilter" (change)="applyFilters()">
                 <option value="">Filter by Visit Type</option>
-                <option value="First">First Visit</option>
+                <option value="First Visit">First Visit</option>
                 <option value="Follow-up">Follow-up</option>
               </select>
             </div>
             <div class="col-md-2">
-
               <button class="btn btn-primary w-500" (click)="navigateToAdd()">
                 <i class="bi bi-plus-circle"></i> Add Appointment
               </button>
@@ -36,8 +36,14 @@
           </div>
         </div>
 
+        <div *ngIf="loading" class="text-center py-3">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
         <!-- Appointments Table -->
-        <div class="table-responsive">
+        <div class="table-responsive" *ngIf="!loading">
           <table class="table table-hover">
             <thead class="table-success">
               <tr>
@@ -83,13 +89,23 @@
         </div>
 
         <!-- Pagination -->
-        <nav >
-          <ul class="pagination justify-content-center">
-            <li class="page-item" *ngFor="let page of getPageNumbers()" [ngClass]="{ active: page === currentPage }">
-              <a class="page-link" href="#" (click)="changePage($event, page)">{{ page }}</a>
-            </li>
-          </ul>
-        </nav>
+         <div class="d-flex justify-content-center">
+          <pagination
+              [(ngModel)]="currentPage"
+              [totalItems]="totalItems"
+              [itemsPerPage]="pageSize"
+              [maxSize]="5"
+              [rotate]="false"
+              [boundaryLinks]="true"
+              [directionLinks]="true"
+              previousText="&lsaquo;"
+              nextText="&rsaquo;"
+              firstText="&laquo;"
+              lastText="&raquo;"
+              (pageChanged)="onPageChanged($event)"
+              >
+            </pagination>
+         </div>
       </div>
     </div>
   </div>

@@ -168,7 +168,7 @@ namespace API.Controllers
 
             _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
-            return Ok(true);
+            return Ok(id);
         }
 
 
