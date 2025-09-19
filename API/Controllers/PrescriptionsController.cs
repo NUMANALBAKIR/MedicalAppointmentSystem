@@ -22,9 +22,9 @@ namespace API.Controllers
 
 
         [HttpPut]
-        public async Task<IActionResult> UpdatePrescriptionDetails([FromBody] List<PrescriptionDetailDTO> prescriptionDetailDTOs)
+        public async Task<IActionResult> UpdatePrescriptionDetails([FromBody] UpdatePrescriptionsDTO updateDto)
         {
-            var appointmentId = prescriptionDetailDTOs[0].AppointmentId;
+            var appointmentId = updateDto.AppointmentId;
 
             var itemsToDelete = await _context.PrescriptionDetails
                 .Where(x => x.AppointmentId == appointmentId)
@@ -33,7 +33,7 @@ namespace API.Controllers
             _context.PrescriptionDetails.RemoveRange(itemsToDelete);
             await _context.SaveChangesAsync();
 
-            foreach (var dto in prescriptionDetailDTOs)
+            foreach (var dto in updateDto.Prescriptions)
             {
                 var detail = new PrescriptionDetail
                 {

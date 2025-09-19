@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { PrescriptionDetailDTO } from '../_models/prescriptionDetailDTO';
 import { Observable } from 'rxjs';
+import { UpdatePrescriptionsDTO } from '../_models/UpdatePrescriptionsDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ export class PrescriptionService {
     this.url = `${environment.apiUrl}/prescriptions`;
   }
 
-  updatePrescriptions(prescriptionDetails: PrescriptionDetailDTO[]) {
-    return this.httpClient.put(this.url, prescriptionDetails, { responseType: 'json' });
+  updatePrescriptions(updatePrescriptions: UpdatePrescriptionsDTO) {
+    return this.httpClient.put(this.url, updatePrescriptions, { responseType: 'json' });
   }
 
   sendEmail(id: number): Observable<boolean> {

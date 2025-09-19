@@ -9,6 +9,7 @@ import { PrescriptionDetailDTO } from '../_models/prescriptionDetailDTO';
 import { AppointmentDTO } from '../_models/appointmentDTO';
 import { PrescriptionService } from '../_services/prescription.service';
 import { ToastrService } from 'ngx-toastr';
+import { UpdatePrescriptionsDTO } from '../_models/UpdatePrescriptionsDTO';
 
 @Component({
   selector: 'app-prescription-details',
@@ -107,9 +108,14 @@ export class PrescriptionDetailsComponent implements OnInit {
         e.endDate = new Date(e.endDate).toISOString();
       });
 
-      console.log('Prescriptions:', formValue);
+      const updatePrescriptions: UpdatePrescriptionsDTO = {
+        appointmentId: this.appointment.id,
+        prescriptions: formValue
+      };
 
-      this.prescriptionService.updatePrescriptions(formValue)
+      console.log('Prescriptions:', updatePrescriptions);
+
+      this.prescriptionService.updatePrescriptions(updatePrescriptions)
         .subscribe({
           next: (res) => {
             this.toastr.success('Prescriptions saved successfully!', 'Success');
