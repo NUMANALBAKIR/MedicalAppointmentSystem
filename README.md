@@ -20,7 +20,7 @@ Download and install Node.js v18 from https://nodejs.org/en/about/previous-relea
 
 2. Install Angular CLI v16.1.0:
 
-Open command line and Navigate to MedicalAppointmentSystem/ClientApp. Run:
+Open command line and Navigate to MedicalAppointmentSystem-master/ClientApp. Run:
 
 npm install -g @angular/cli@16.1.0
 
