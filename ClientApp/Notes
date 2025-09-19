@@ -11,6 +11,13 @@ Open angular.json and add CSS files under "styles":
 ]
 
 
+npm install ngx-toastr@^17.0.2 @angular/animations
+
+in angular.json:
+"styles": [
+  "node_modules/ngx-toastr/toastr.css"
+]
+
 
 npm install jspdf
 

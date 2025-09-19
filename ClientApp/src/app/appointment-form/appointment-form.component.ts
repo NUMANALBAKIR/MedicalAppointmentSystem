@@ -7,6 +7,7 @@ import { PatientDTO } from '../_models/patientDTO';
 import { DoctorDTO } from '../_models/doctorDTO';
 import { DataService } from '../_services/data.service';
 import { AppointmentDTO } from '../_models/appointmentDTO';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-appointment-form',
@@ -25,7 +26,8 @@ export class AppointmentFormComponent implements OnInit {
     public appointmentService: AppointmentService,
     public dataService: DataService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.appointmentForm = this.createForm();
   }
@@ -88,10 +90,12 @@ export class AppointmentFormComponent implements OnInit {
         this.appointmentService.updateAppointment(this.appointmentId, formValue)
           .subscribe({
             next: (res) => {
+              this.toastr.success('Appointment updated!', 'Success');
               this.router.navigate(['/appointment-list']);
             },
             error: (err) => {
               console.log(err);
+              this.toastr.error('Failed', 'Error');
             }
           });
       }
@@ -99,10 +103,12 @@ export class AppointmentFormComponent implements OnInit {
         this.appointmentService.createAppointment(formValue)
           .subscribe({
             next: (res) => {
+              this.toastr.success('Appointment created!', 'Success');
               this.router.navigate(['/appointment-list']);
             },
             error: (err) => {
               console.log(err);
+              this.toastr.error('Failed', 'Error');
             }
           });
 

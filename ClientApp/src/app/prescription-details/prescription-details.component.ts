@@ -8,6 +8,7 @@ import { DataService } from '../_services/data.service';
 import { PrescriptionDetailDTO } from '../_models/prescriptionDetailDTO';
 import { AppointmentDTO } from '../_models/appointmentDTO';
 import { PrescriptionService } from '../_services/prescription.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-prescription-details',
@@ -26,7 +27,8 @@ export class PrescriptionDetailsComponent implements OnInit {
     private fb: FormBuilder,
     public appointmentService: AppointmentService,
     public dataService: DataService,
-    public prescriptionService: PrescriptionService
+    public prescriptionService: PrescriptionService,
+    private toastr: ToastrService
 
   ) {
     this.prescriptionFormGroup = this.createPrescriptionFormGroup();
@@ -110,10 +112,12 @@ export class PrescriptionDetailsComponent implements OnInit {
       this.prescriptionService.updatePrescriptions(formValue)
         .subscribe({
           next: (res) => {
+            this.toastr.success('Prescriptions saved successfully!', 'Success');
             this.router.navigate(['/appointment-list']);
           },
           error: (err) => {
             console.log(err);
+            this.toastr.error('Failed', 'Error');
           }
         });
 
