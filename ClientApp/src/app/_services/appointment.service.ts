@@ -48,7 +48,7 @@ export class AppointmentService {
 
   getAppointments(
     page: number = 1,
-    pageSize: number = 10,
+    pageSize: number = 2,
     search?: string,
     doctorFilter?: string,
     visitTypeFilter?: string

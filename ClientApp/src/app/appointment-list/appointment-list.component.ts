@@ -90,8 +90,8 @@ export class AppointmentListComponent implements OnInit {
       this.appointmentService.deleteAppointment(id)
         .subscribe({
           next: (res) => {
-            if (res && typeof res === 'number') {
-              this.toastr.success('Dleted successfully!', 'Success');
+            if (res) {
+              this.toastr.success('Deleted successfully!', 'Success');
               this.loadAppointments();
             }
           },

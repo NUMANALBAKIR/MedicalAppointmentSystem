@@ -19,6 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 
 // DI
 builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddScoped<IAppointmentsService, AppointmentService>();
+builder.Services.AddScoped<IPrescriptionsService, PrescriptionsService>();
+builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 
 

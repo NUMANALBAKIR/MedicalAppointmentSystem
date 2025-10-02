@@ -70,6 +70,7 @@
             <div class="col-md-6">
               <label class="form-label">Notes</label>
               <input class="form-control" formControlName="notes"
+               [class.is-invalid]="isFieldInvalid('notes')"
                 placeholder="Enter appointment notes"/>
                 <div class="text-danger small" *ngIf="isFieldInvalid('notes')">
                   Please add notes.
@@ -78,6 +79,7 @@
             <div class="col-md-6">
               <label class="form-label">Diagnosis</label>
               <textarea class="form-control" formControlName="diagnosis" rows="3"
+               [class.is-invalid]="isFieldInvalid('diagnosis')"
                 placeholder="Enter diagnosis"></textarea>
                               <div class="text-danger small" *ngIf="isFieldInvalid('diagnosis')">
                 Please add diagnosis.
@@ -100,6 +102,8 @@
   </div>
 </div>
 
-<!-- <pre>{{ appointmentForm.status }}</pre>
+<!--
+  <pre>{{ appointmentForm.status }}</pre>
 <pre>{{ appointmentForm.errors | json }}</pre>
-<pre>{{ appointmentForm.value | json }}</pre> -->
+-->
+<pre>{{ appointmentForm.value | json }}</pre>

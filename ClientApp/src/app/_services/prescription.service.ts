@@ -8,7 +8,7 @@ import { UpdatePrescriptionsDTO } from '../_models/UpdatePrescriptionsDTO';
   providedIn: 'root'
 })
 export class PrescriptionService {
-  private url!: string;
+  private url: string;
 
   constructor(private httpClient: HttpClient) {
     this.url = `${environment.apiUrl}/prescriptions`;

@@ -13,41 +13,22 @@ namespace API.Controllers
     public class PrescriptionsController : ControllerBase
     {
         private readonly AppDbContext _context;
-        private IEmailService _emailService;
-        public PrescriptionsController(AppDbContext context, IEmailService emailService)
+        private IPrescriptionsService _prescriptionsService;
+
+        public PrescriptionsController(
+            AppDbContext context,
+            IPrescriptionsService prescriptionsService)
         {
             _context = context;
-            _emailService = emailService;
+            _prescriptionsService = prescriptionsService;
         }
-
 
         [HttpPut]
         public async Task<IActionResult> UpdatePrescriptionDetails([FromBody] UpdatePrescriptionsDTO updateDto)
         {
-            var appointmentId = updateDto.AppointmentId;
 
-            var itemsToDelete = await _context.PrescriptionDetails
-                .Where(x => x.AppointmentId == appointmentId)
-                .ToListAsync();
+            var result = await _prescriptionsService.UpdatePrescriptionDetails(updateDto);
 
-            _context.PrescriptionDetails.RemoveRange(itemsToDelete);
-            await _context.SaveChangesAsync();
-
-            foreach (var dto in updateDto.Prescriptions)
-            {
-                var detail = new PrescriptionDetail
-                {
-                    AppointmentId = dto.AppointmentId,
-                    MedicineId = dto.MedicineId,
-                    Dosage = dto.Dosage,
-                    StartDate = dto.StartDate,
-                    EndDate = dto.EndDate,
-                    Notes = dto.Notes
-                };
-
-                _context.PrescriptionDetails.Add(detail);
-            }
-            await _context.SaveChangesAsync();
             return Ok(true);
         }
 
@@ -55,8 +36,8 @@ namespace API.Controllers
         [HttpGet("sendEmail/appointmentId/{id}")]
         public async Task<IActionResult> SendAppointmentEmail(int id)
         {
-            var result = await _emailService.SendEmailAsync(id);
-            return Ok(new { success = result });
+            var result = await _prescriptionsService.SendAppointmentEmail(id);
+            return Ok(new { result });
         }
 
     }

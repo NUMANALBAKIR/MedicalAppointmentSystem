@@ -78,13 +78,13 @@ export class PrescriptionDetailsComponent implements OnInit {
   }
 
   loadAppointWithPrescriptions(id: number): void {
-    this.appointmentService.getAppointmentById(id).subscribe(
-      (appointment: AppointmentDTO) => {
+    this.appointmentService.getAppointmentById(id).subscribe({
+      next: (appointment: AppointmentDTO) => {
         if (appointment) {
           this.appointment = appointment;
 
-          if (appointment?.prescriptions?.length > 0) {
-            appointment.prescriptions.forEach(prescription => {
+          if (this.appointment?.prescriptions?.length > 0) {
+            this.appointment.prescriptions.forEach(prescription => {
               this.getPrescriptionArray.push(this.createPrescriptionRow(prescription));
             });
           }
@@ -93,10 +93,10 @@ export class PrescriptionDetailsComponent implements OnInit {
           }
         }
       },
-      (e) => {
+      error: (e) => {
         console.log('Error: ' + e);
       }
-    );
+    });
   }
 
   onSubmit() {

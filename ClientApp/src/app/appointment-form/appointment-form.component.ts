@@ -15,11 +15,11 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./appointment-form.component.css']
 })
 export class AppointmentFormComponent implements OnInit {
-  appointmentForm: FormGroup;
+  appointmentForm!: FormGroup;
   isEditMode = false;
   appointmentId: number | null = null;
-  public allPatients!: Observable<PatientDTO[]>;
-  public allDoctors!: Observable<DoctorDTO[]>;
+  allPatients!: Observable<PatientDTO[]>;
+  allDoctors!: Observable<DoctorDTO[]>;
 
   constructor(
     private fb: FormBuilder,
@@ -28,11 +28,11 @@ export class AppointmentFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
-  ) {
-    this.appointmentForm = this.createForm();
-  }
+  ) { }
 
   ngOnInit(): void {
+    this.appointmentForm = this.createForm();
+
     this.allDoctors = this.dataService.getDoctors();
     this.allPatients = this.dataService.getPatients();
 
@@ -47,6 +47,7 @@ export class AppointmentFormComponent implements OnInit {
 
   createForm(): FormGroup {
     return this.fb.group({
+      id: [''],
       patientId: ['', Validators.required],
       doctorId: ['', Validators.required],
       appointmentDate: ['', Validators.required],
@@ -57,8 +58,8 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   loadAppointment(id: number): void {
-    this.appointmentService.getAppointmentById(id).subscribe(
-      (appointment: AppointmentDTO) => {
+    this.appointmentService.getAppointmentById(id).subscribe({
+      next: (appointment: AppointmentDTO) => {
         if (appointment) {
           this.appointmentForm.patchValue({
             id: appointment.id,
@@ -73,10 +74,10 @@ export class AppointmentFormComponent implements OnInit {
           });
         }
       },
-      (e) => {
+      error: (e) => {
         console.log('Error: ' + e);
       }
-    );
+    });
   }
 
   onSubmit(): void {

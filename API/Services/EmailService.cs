@@ -58,13 +58,15 @@ public class EmailService : IEmailService
 
     private string GenerateEmailBody(Appointment appointment)
     {
-        var prescriptionsHtml = string.Join("", appointment.Prescriptions.Select(p =>
+        var prescriptionsHtml = string.Join("",
+            appointment.Prescriptions.Select(p =>
             $@"<tr>
                 <td style='padding: 8px; border-bottom: 1px solid #ddd;'>{p.Medicine.Name}</td>
                 <td style='padding: 8px; border-bottom: 1px solid #ddd;'>{p.Dosage}</td>
                 <td style='padding: 8px; border-bottom: 1px solid #ddd;'>{p.StartDate:dd-MMM-yyyy}</td>
-            <td style='padding: 8px; border-bottom: 1px solid #ddd;'>{p.EndDate:dd-MMM-yyyy}</td>
-            </tr>"));
+                <td style='padding: 8px; border-bottom: 1px solid #ddd;'>{p.EndDate:dd-MMM-yyyy}</td>
+            </tr>")
+            );
 
         return $@"
         <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;'>
