@@ -1,42 +1,28 @@
-# Medical Appointment System
+# Medical Appointment System - using Angular, .Net Core API. 
 
-### Tech Stack:
-Angular CLI v16.1.0  
-ASP.NET Core 8.0 Web API   
-MS SQL Server  
-Bootstrap v5.3.0  
- 
-### Note:
+### Developed fully by Numan Al Bakir.
 
-For security, I did not include my email's SMTP information in appsettings.json. If SMTP information is added, email sending will work fine.
+#### Customer's chat box - un-opened -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/home%20w%20server%20pagination.PNG)
 
-### Installation:
+#### Customer's chat box - opened -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/search%20n%20filters.PNG)
 
-Download the project's zip from Github, extract it, and follow these instructions:
+#### Create new Agent -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/reactive%20validations.PNG)
 
-1. Install Node.js:
+#### Agent Log In page, with validations -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/edit%20appointment.PNG)
 
-Download and install Node.js v18 from https://nodejs.org/en/about/previous-releases
+#### Agent's messenger page. Unread message notifications are displayed. Also, new customer can be attended by clicking the green button -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/prescriptions.png)
 
-2. Install Angular CLI v16.1.0:
+#### Disconnections, reconnections are gracefully handled and data is synched upon reconnection -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/pdf.PNG)
 
-Open command line and Navigate to MedicalAppointmentSystem-master/ClientApp. Run:
+#### Agent's messenger page. Unread message notifications are displayed. Also, new customer can be attended by clicking the green button -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/email.PNG)
 
-npm install -g @angular/cli@16.1.0
-
-3. Install Project Dependencies by running:
-
-npm install
-
-4. Make sure angular.json includes under build> Options:
-
-"styles": [  
-  "node_modules/bootstrap/dist/css/bootstrap.min.css",  
-  "node_modules/bootstrap-icons/font/bootstrap-icons.css",  
-  "node_modules/ngx-toastr/toastr.css",   
-  "src/styles.css"  
-]
-
-5. Click MedicalAppointmentSystem.sln and open Visual Studio. From top menues, select: Tools> Nuget Package Manager> package Manager Console. In the console, select "API" as default project and run:
-update-database
+#### Disconnections, reconnections are gracefully handled and data is synched upon reconnection -
+![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/del.PNG)
 
