@@ -2,27 +2,27 @@
 
 ### Developed fully by Numan Al Bakir.
 
-#### Customer's chat box - un-opened -
+#### Home page with server-side pagination of appointments table -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/home%20w%20server%20pagination.PNG)
 
-#### Customer's chat box - opened -
+#### Searching by Patient or Doctor name, filtering by doctor, and filtering by visit type -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/search%20n%20filters.PNG)
 
-#### Create new Agent -
+#### Reactive form with validations -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/reactive%20validations.PNG)
 
-#### Agent Log In page, with validations -
+#### Appointment can be edited -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/edit%20appointment.PNG)
 
-#### Agent's messenger page. Unread message notifications are displayed. Also, new customer can be attended by clicking the green button -
+#### Medicines can be added to or edited in prescriptions -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/prescriptions.png)
 
-#### Disconnections, reconnections are gracefully handled and data is synched upon reconnection -
+#### An appointment with its prescription can be downloaded as PDF -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/pdf.PNG)
 
-#### Agent's messenger page. Unread message notifications are displayed. Also, new customer can be attended by clicking the green button -
+#### An appointment with its prescription can be emailed -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/email.PNG)
 
-#### Disconnections, reconnections are gracefully handled and data is synched upon reconnection -
+#### Appointments can be deleted -
 ![test image](https://raw.githubusercontent.com/NUMANALBAKIR/MedicalAppointmentSystem/refs/heads/master/screenshots/del.PNG)
 
