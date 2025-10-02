@@ -16,11 +16,11 @@ public class AppointmentService : IAppointmentsService
     }
 
     public async Task<object> GetAppointments(
-        int page = 1,
-        int pageSize = 2,
-        string? search = null,
-        string? doctorFilter = null,
-        string? visitTypeFilter = null)
+        int page,
+        int pageSize,
+        string? search,
+        string? doctorFilter,
+        string? visitTypeFilter)
     {
         var query = _context.Appointments
             .Include(a => a.Patient)

@@ -61,7 +61,7 @@
                 <td>{{ appointment.doctorName }}</td>
                 <td>{{ appointment.appointmentDate | date:'dd-MMM-yy' }}</td>
                 <td>
-                  <span class="badge" [ngClass]="appointment.visitType === 'First' ? 'bg-primary' : 'bg-secondary'">
+                  <span class="badge" [ngClass]="appointment.visitType === 'First Visit' ? 'bg-primary' : 'bg-secondary'">
                     {{ appointment.visitType }}
                   </span>
                 </td>

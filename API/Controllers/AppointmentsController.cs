@@ -29,8 +29,8 @@ namespace API.Controllers
             [FromQuery] string? search = null,
             [FromQuery] string? doctorFilter = null,
             [FromQuery] string? visitTypeFilter = null)
-        {
-            var result = await _appointmentsService.GetAppointments();
+            {
+            var result = await _appointmentsService.GetAppointments(page, pageSize, search, doctorFilter, visitTypeFilter);
             return Ok(result);
         }
 
